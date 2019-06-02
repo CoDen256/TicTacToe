@@ -16,14 +16,14 @@ class MainMenuScreen:
         self.button_3x3 = Button(
                             position=(self.game.w/3, self.game.h/2),
                             size=(300, 150),
-                            color=(204, 45, 138),
+                            color=color.button,
                             text="3x3 Grid",
                             on_click=lambda: self.game.set(self.game.screen("SelectionScreen")(self.game, 0)))
 
         self.button_inf = Button(
                             position=(self.game.w*2/3, self.game.h/2),
                             size=(300, 150),
-                            color=(204, 45, 138),
+                            color=color.button,
                             text="Infinite Grid",
                             on_click=lambda: self.game.set(self.game.screen("SelectionScreen")(self.game, 1)))
 
@@ -39,6 +39,8 @@ class MainMenuScreen:
                 self.mouse.on_button_up()
 
             if e.type == pygame.KEYDOWN:
+                if e.key == pygame.K_c:
+                    self.game.change_color()
                 if e.key == pygame.K_ESCAPE:
                     self.game.quit()
 
@@ -50,14 +52,14 @@ class MainMenuScreen:
 
     def render(self):
         self.game.window.blit(self.surface, (0, 0))
-        self.surface.fill((221, 116, 252))
+        self.surface.fill(color.background_mainmenu)
 
         self.button_inf.render(self.surface)
         self.button_3x3.render(self.surface)
 
-        Utils.toast(self.surface, 'WELCOME TO THE TIC-TAC-TOE GAME', 50, (50, 50, 50),
+        Utils.toast(self.surface, 'WELCOME TO THE TIC-TAC-TOE GAME', 50, color.text,
               self.game.w/2, self.game.h/5)
-        Utils.toast(self.surface, 'CHOOSE THE GRID', 50, (50, 50, 50),
+        Utils.toast(self.surface, 'CHOOSE THE GRID', 50, color.text,
               self.game.w/2, self.game.h/3)
 
         pygame.display.flip()

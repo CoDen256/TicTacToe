@@ -16,14 +16,14 @@ class SelectionScreen:
         self.button_hum = Button(
                             position=(self.game.w/3, self.game.h/2),
                             size=(300, 150),
-                            color=(204, 45, 138),
+                            color=color.button,
                             text="Against Human",
                             on_click=lambda: self.game.set(self.game.screen("GameScreen")(self.game, self.type, 0)))
 
         self.button_ai = Button(
                             position=(self.game.w*2/3, self.game.h/2),
                             size=(300, 150),
-                            color=(204, 45, 138),
+                            color=color.button,
                             text="Against AI",
                             on_click=lambda: self.game.set(self.game.screen("GameScreen")(self.game, self.type, 1)))
 
@@ -39,6 +39,8 @@ class SelectionScreen:
                 self.mouse.on_button_up()
 
             if e.type == pygame.KEYDOWN:
+                if e.key == pygame.K_c:
+                    self.game.change_color()
                 if e.key == pygame.K_ESCAPE:
                     self.game.quit()
 
@@ -49,12 +51,12 @@ class SelectionScreen:
 
     def render(self):
         self.game.window.blit(self.surface, (0, 0))
-        self.surface.fill((221, 116, 252))
+        self.surface.fill(color.background_selection)
 
         self.button_hum.render(self.surface)
         self.button_ai.render(self.surface)
 
-        Utils.toast(self.surface, "SELECT YOUR OPPONENT", 40, (50, 50, 50),
+        Utils.toast(self.surface, "SELECT YOUR OPPONENT", 40, color.text,
               self.game.w/2, self.game.h/3)
 
         pygame.display.flip()
